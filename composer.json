@@ -21,10 +21,6 @@
   "autoload": {
     "psr-4": {
       "Mix\\Log": "src/"
-    },
-    "files": [
-      "src/Mix.php",
-      "src/functions.php"
-    ]
+    }
   }
 }
