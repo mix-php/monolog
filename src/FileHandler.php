@@ -55,7 +55,7 @@ class FileHandler extends BaseObject implements HandlerInterface
                 $timeFormat = date('YW');
                 break;
         }
-        $filename = "{$logDir}/{$subDir}/{$level}_{$timeFormat}";
+        $filename = $logDir . DIRECTORY_SEPARATOR . $subDir . DIRECTORY_SEPARATOR . "{$level}_{$timeFormat}";
         $file     = "{$filename}.log";
         // 创建目录
         $dir = dirname($file);
