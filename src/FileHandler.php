@@ -3,6 +3,7 @@
 namespace Mix\Log;
 
 use Mix\Core\BaseObject;
+use Mix\Helpers\FileSystemHelper;
 
 /**
  * FileHandler类
@@ -38,7 +39,7 @@ class FileHandler extends BaseObject implements HandlerInterface
     {
         // 生成文件名
         $logDir = $this->dir;
-        if (pathinfo($this->dir)['dirname'] == '.') {
+        if (!FileSystemHelper::isAbsolute($logDir)) {
             $logDir = \Mix::$app->getRuntimePath() . DIRECTORY_SEPARATOR . $this->dir;
         }
         switch ($this->rotate) {
