@@ -5,12 +5,13 @@ namespace Mix\Log;
 use Mix\Helpers\JsonHelper;
 use Mix\Core\Component;
 use Mix\Core\ComponentInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Logger组件
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Logger extends Component
+class Logger extends Component implements LoggerInterface
 {
 
     // 协程模式
