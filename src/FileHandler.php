@@ -12,29 +12,50 @@ use Mix\Helpers\FileSystemHelper;
 class FileHandler extends BaseObject implements HandlerInterface
 {
 
-    // 轮转规则
+    /**
+     * 轮转规则
+     */
     const ROTATE_HOUR = 0;
     const ROTATE_DAY = 1;
     const ROTATE_WEEKLY = 2;
 
-    // 日志目录
+    /**
+     * 日志目录
+     * @var string
+     */
     public $dir = 'logs';
 
-    // 日志轮转类型
+    /**
+     * 日志轮转类型
+     * @var int
+     */
     public $rotate = self::ROTATE_DAY;
 
-    // 最大文件尺寸
+    /**
+     * 最大文件尺寸
+     * @var int
+     */
     public $maxFileSize = 0;
 
-    // 写入日志
+    /**
+     * 写入日志
+     * @param $level
+     * @param $message
+     * @param array $context
+     * @return bool
+     */
     public function write($level, $message, array $context = [])
     {
         $file    = $this->getFile($level);
-        $message = self::getMessage($message, $context);
+        $message = $this->getMessage($message, $context);
         return error_log($message . PHP_EOL, 3, $file);
     }
 
-    // 获取要写入的文件
+    /**
+     * 获取要写入的文件
+     * @param $level
+     * @return string
+     */
     protected function getFile($level)
     {
         // 生成文件名
@@ -70,8 +91,13 @@ class FileHandler extends BaseObject implements HandlerInterface
         return $file;
     }
 
-    // 获取要写入的消息
-    protected static function getMessage($message, array $context = [])
+    /**
+     * 获取要写入的消息
+     * @param $message
+     * @param array $context
+     * @return string
+     */
+    protected function getMessage($message, array $context = [])
     {
         // 替换占位符
         $replace = [];
