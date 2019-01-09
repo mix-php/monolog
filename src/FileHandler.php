@@ -2,14 +2,14 @@
 
 namespace Mix\Log;
 
-use Mix\Core\BaseObject;
+use Mix\Core\DIObject;
 use Mix\Helpers\FileSystemHelper;
 
 /**
  * FileHandler类
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class FileHandler extends BaseObject implements HandlerInterface
+class FileHandler extends DIObject implements HandlerInterface
 {
 
     /**
