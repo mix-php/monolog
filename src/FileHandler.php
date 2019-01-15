@@ -29,7 +29,7 @@ class FileHandler extends BeanObject implements HandlerInterface
      * 日志目录
      * @var string
      */
-    public $dir = 'logs';
+    public $dir = '';
 
     /**
      * 日志轮转类型
