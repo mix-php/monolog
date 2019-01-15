@@ -15,9 +15,15 @@ class FileHandler extends BeanObject implements HandlerInterface
     /**
      * 轮转规则
      */
-    const ROTATE_HOUR = 0;
-    const ROTATE_DAY = 1;
-    const ROTATE_WEEKLY = 2;
+    const ROTATE_HOUR = 1;
+    const ROTATE_DAY = 2;
+    const ROTATE_WEEKLY = 3;
+
+    /**
+     * 单文件
+     * @var string
+     */
+    public $single = '';
 
     /**
      * 日志目录
@@ -46,18 +52,29 @@ class FileHandler extends BeanObject implements HandlerInterface
      */
     public function write($level, $message, array $context = [])
     {
-        $file    = $this->getFile($level);
-        $message = $this->getMessage($message, $context);
+        $file = $this->getFile($level);
+        if (!$file) {
+            return false;
+        }
+        $message = $this->getMessage($level, $message, $context);
         return error_log($message . PHP_EOL, 3, $file);
     }
 
     /**
-     * 获取要写入的文件
+     * 获取文件
      * @param $level
-     * @return string
+     * @return bool|string
      */
     protected function getFile($level)
     {
+        // 没有文件信息
+        if (!$this->single && !$this->dir) {
+            return false;
+        }
+        // 单文件
+        if ($this->single) {
+            return $this->single;
+        }
         // 生成文件名
         $logDir = $this->dir;
         if (!FileSystemHelper::isAbsolute($logDir)) {
@@ -76,8 +93,11 @@ class FileHandler extends BeanObject implements HandlerInterface
                 $subDir     = date('Y');
                 $timeFormat = date('YW');
                 break;
+            default:
+                $subDir     = '';
+                $timeFormat = '';
         }
-        $filename = $logDir . DIRECTORY_SEPARATOR . $subDir . DIRECTORY_SEPARATOR . "{$level}_{$timeFormat}";
+        $filename = $logDir . ($subDir ? DIRECTORY_SEPARATOR . $subDir : '') . DIRECTORY_SEPARATOR . $level . ($timeFormat ? '_' . $timeFormat : '');
         $file     = "{$filename}.log";
         // 创建目录
         $dir = dirname($file);
@@ -92,12 +112,13 @@ class FileHandler extends BeanObject implements HandlerInterface
     }
 
     /**
-     * 获取要写入的消息
+     * 获取消息
+     * @param $level
      * @param $message
      * @param array $context
      * @return string
      */
-    protected function getMessage($message, array $context = [])
+    protected function getMessage($level, $message, array $context = [])
     {
         // 替换占位符
         $replace = [];
@@ -108,6 +129,9 @@ class FileHandler extends BeanObject implements HandlerInterface
         // 增加时间
         $time    = date('Y-m-d H:i:s');
         $message = "[time] {$time} [message] {$message}";
+        if ($this->single) {
+            $message = "[{$level}] {$message}";
+        }
         return $message;
     }
 
