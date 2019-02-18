@@ -3,8 +3,8 @@
 namespace Mix\Log;
 
 use Mix\Helpers\JsonHelper;
-use Mix\Core\Component;
-use Mix\Core\ComponentInterface;
+use Mix\Core\Component\Component;
+use Mix\Core\Component\ComponentInterface;
 use Psr\Log\LoggerInterface;
 
 /**
