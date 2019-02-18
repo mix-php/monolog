@@ -6,7 +6,8 @@ use Mix\Core\Bean\BeanObject;
 use Mix\Helpers\FileSystemHelper;
 
 /**
- * FileHandler类
+ * Class FileHandler
+ * @package Mix\Log
  * @author LIUJIAN <coder.keda@gmail.com>
  */
 class FileHandler extends BeanObject implements HandlerInterface
@@ -47,16 +48,15 @@ class FileHandler extends BeanObject implements HandlerInterface
      * 写入日志
      * @param $level
      * @param $message
-     * @param array $context
      * @return bool
      */
-    public function write($level, $message, array $context = [])
+    public function write($level, $message)
     {
         $file = $this->getFile($level);
         if (!$file) {
             return false;
         }
-        $message = $this->getMessage($level, $message, $context);
+        $message = $this->getMessage($level, $message);
         return error_log($message . PHP_EOL, 3, $file);
     }
 
@@ -115,18 +115,10 @@ class FileHandler extends BeanObject implements HandlerInterface
      * 获取消息
      * @param $level
      * @param $message
-     * @param array $context
      * @return string
      */
-    protected function getMessage($level, $message, array $context = [])
+    protected function getMessage($level, $message)
     {
-        // 替换占位符
-        $replace = [];
-        foreach ($context as $key => $val) {
-            $replace['{' . $key . '}'] = $val;
-        }
-        $message = strtr($message, $replace);
-        // 增加时间
         $time    = date('Y-m-d H:i:s');
         $message = "[time] {$time} [message] {$message}";
         if ($this->single) {
