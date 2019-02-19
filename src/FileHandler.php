@@ -2,7 +2,7 @@
 
 namespace Mix\Log;
 
-use Mix\Core\Bean\BeanObject;
+use Mix\Core\Bean\AbstractObject;
 use Mix\Helpers\FileSystemHelper;
 
 /**
@@ -10,7 +10,7 @@ use Mix\Helpers\FileSystemHelper;
  * @package Mix\Log
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class FileHandler extends BeanObject implements HandlerInterface
+class FileHandler extends AbstractObject implements HandlerInterface
 {
 
     /**

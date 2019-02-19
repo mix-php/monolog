@@ -3,7 +3,7 @@
 namespace Mix\Log;
 
 use Mix\Helpers\JsonHelper;
-use Mix\Core\Component\Component;
+use Mix\Core\Component\AbstractComponent;
 use Mix\Core\Component\ComponentInterface;
 use Psr\Log\LoggerInterface;
 
@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
  * @package Mix\Log
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class Logger extends Component implements LoggerInterface
+class Logger extends AbstractComponent implements LoggerInterface
 {
 
     /**
