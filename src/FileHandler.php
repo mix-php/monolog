@@ -3,7 +3,7 @@
 namespace Mix\Log;
 
 use Mix\Core\Bean\AbstractObject;
-use Mix\Helpers\FileSystemHelper;
+use Mix\Helper\FileSystemHelper;
 
 /**
  * Class FileHandler
