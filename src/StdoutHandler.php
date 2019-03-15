@@ -21,7 +21,21 @@ class StdoutHandler extends AbstractComponent implements HandlerInterface
     public function write($level, $message)
     {
         // TODO: Implement write() method.
-        echo $message . PHP_EOL;
+        echo $this->getMessage($level, $message) . PHP_EOL;
+    }
+
+    /**
+     * 获取消息
+     * @param $level
+     * @param $message
+     * @return string
+     */
+    protected function getMessage($level, $message)
+    {
+        $time = date('Y-m-d H:i:s');
+        $message = "[time] {$time} [message] {$message}";
+        $message = "[{$level}] {$message}";
+        return $message;
     }
 
 }
