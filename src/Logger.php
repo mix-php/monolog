@@ -2,7 +2,6 @@
 
 namespace Mix\Log;
 
-use Mix\Helper\JsonHelper;
 use Mix\Core\Component\AbstractComponent;
 use Mix\Core\Component\ComponentInterface;
 use Psr\Log\LoggerInterface;
