@@ -28,7 +28,7 @@ class Logger extends AbstractComponent implements LoggerInterface
 
     /**
      * 处理者
-     * @var \Mix\Log\HandlerInterface
+     * @var \Mix\Log\LoggerHandlerInterface
      */
     public $handler;
 
