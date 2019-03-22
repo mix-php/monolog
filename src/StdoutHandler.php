@@ -10,7 +10,7 @@ use Mix\Helper\PhpHelper;
  * @package Mix\Log
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class StdoutHandler extends AbstractComponent implements HandlerInterface
+class StdoutHandler extends AbstractComponent implements LoggerHandlerInterface
 {
 
     /**

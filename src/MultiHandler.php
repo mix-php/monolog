@@ -9,7 +9,7 @@ use Mix\Core\Component\AbstractComponent;
  * @package Mix\Log
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class MultiHandler extends AbstractComponent implements HandlerInterface
+class MultiHandler extends AbstractComponent implements LoggerHandlerInterface
 {
 
     /**

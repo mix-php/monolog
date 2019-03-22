@@ -10,7 +10,7 @@ use Mix\Helper\FileSystemHelper;
  * @package Mix\Log
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-class FileHandler extends AbstractObject implements HandlerInterface
+class FileHandler extends AbstractObject implements LoggerHandlerInterface
 {
 
     /**

@@ -3,11 +3,11 @@
 namespace Mix\Log;
 
 /**
- * Interface HandlerInterface
+ * Interface LoggerHandlerInterface
  * @package Mix\Log
  * @author LIUJIAN <coder.keda@gmail.com>
  */
-interface HandlerInterface
+interface LoggerHandlerInterface
 {
 
     /**
