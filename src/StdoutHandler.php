@@ -25,6 +25,9 @@ class StdoutHandler extends AbstractComponent implements LoggerHandlerInterface
         if (!PhpHelper::isCli()) {
             return;
         }
+        if (\Mix::$app instanceof \Mix\Console\Application) {
+            return;
+        }
         echo $this->getMessage($level, $message) . PHP_EOL;
     }
 
