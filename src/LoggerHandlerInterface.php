@@ -5,7 +5,7 @@ namespace Mix\Log;
 /**
  * Interface LoggerHandlerInterface
  * @package Mix\Log
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 interface LoggerHandlerInterface
 {

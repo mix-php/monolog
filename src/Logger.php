@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Class Logger
  * @package Mix\Log
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
 class Logger extends AbstractComponent implements LoggerInterface
 {
