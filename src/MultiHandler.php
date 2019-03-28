@@ -40,6 +40,7 @@ class MultiHandler extends AbstractComponent implements LoggerHandlerInterface
             /** @var LoggerHandlerInterface $handler */
             $handler->write($level, $message);
         }
+        return true;
     }
 
 }

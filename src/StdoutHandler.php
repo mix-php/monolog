@@ -2,6 +2,7 @@
 
 namespace Mix\Log;
 
+use Mix\Console\CommandLine\Color;
 use Mix\Core\Component\AbstractComponent;
 use Mix\Helper\PhpHelper;
 
@@ -22,25 +23,30 @@ class StdoutHandler extends AbstractComponent implements LoggerHandlerInterface
     public function write($level, $message)
     {
         // TODO: Implement write() method.
-        // 兼容 FastCGI 模式
+        // FastCGI 模式下不打印
         if (!PhpHelper::isCli()) {
             return;
         }
-        echo $this->getMessage($level, $message) . PHP_EOL;
-    }
-
-    /**
-     * 获取消息
-     * @param $level
-     * @param $message
-     * @return string
-     */
-    protected function getMessage($level, $message)
-    {
-        $time    = date('Y-m-d H:i:s');
-        $message = "[time] {$time} [message] {$message}";
-        $message = "[{$level}] {$message}";
-        return $message;
+        // win 系统普通打印
+        if (PhpHelper::isWin()) {
+            echo $message;
+            return true;
+        }
+        // 带颜色打印
+        switch ($level) {
+            case 'error':
+                Color::new(Color::FG_RED)->print($message);
+                break;
+            case 'warning':
+                Color::new(Color::FG_YELLOW)->print($message);
+                break;
+            case 'notice':
+                Color::new(Color::FG_GREEN)->print($message);
+                break;
+            default:
+                echo $message;
+        }
+        return true;
     }
 
 }
