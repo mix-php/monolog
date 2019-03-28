@@ -131,7 +131,10 @@ class Logger extends AbstractComponent implements LoggerInterface
     {
         $levels = ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'];
         if (!in_array($level, $levels) || in_array($level, $this->levels)) {
-            return $this->handler->write($level, static::interpolate($message, $context));
+            $message = static::interpolate($message, $context);
+            $time = date('Y-m-d H:i:s');
+            $message = "[time] {$time} [level] {$level} [message] {$message}" . PHP_EOL;
+            return $this->handler->write($level, $message);
         }
         return false;
     }
