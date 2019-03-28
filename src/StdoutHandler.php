@@ -22,10 +22,8 @@ class StdoutHandler extends AbstractComponent implements LoggerHandlerInterface
     public function write($level, $message)
     {
         // TODO: Implement write() method.
+        // 兼容 FastCGI 模式
         if (!PhpHelper::isCli()) {
-            return;
-        }
-        if (\Mix::$app instanceof \Mix\Console\Application) {
             return;
         }
         echo $this->getMessage($level, $message) . PHP_EOL;
