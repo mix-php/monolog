@@ -3,13 +3,14 @@
 namespace Mix\Log;
 
 use Mix\Core\Component\AbstractComponent;
+use Mix\Helper\PhpHelper;
 
 /**
  * Class StdoutHandler
  * @package Mix\Log
- * @author LIUJIAN <coder.keda@gmail.com>
+ * @author liu,jian <coder.keda@gmail.com>
  */
-class StdoutHandler extends AbstractComponent implements HandlerInterface
+class StdoutHandler extends AbstractComponent implements LoggerHandlerInterface
 {
 
     /**
@@ -21,6 +22,10 @@ class StdoutHandler extends AbstractComponent implements HandlerInterface
     public function write($level, $message)
     {
         // TODO: Implement write() method.
+        // 兼容 FastCGI 模式
+        if (!PhpHelper::isCli()) {
+            return;
+        }
         echo $this->getMessage($level, $message) . PHP_EOL;
     }
 
@@ -32,7 +37,7 @@ class StdoutHandler extends AbstractComponent implements HandlerInterface
      */
     protected function getMessage($level, $message)
     {
-        $time = date('Y-m-d H:i:s');
+        $time    = date('Y-m-d H:i:s');
         $message = "[time] {$time} [message] {$message}";
         $message = "[{$level}] {$message}";
         return $message;
