@@ -52,7 +52,14 @@ class FileHandler extends AbstractObject implements LoggerHandlerInterface
      */
     public function write($level, $message)
     {
+
+
+
         $file = $this->getFile($level);
+
+
+        var_dump($this);die;
+
         if (!$file) {
             return false;
         }
