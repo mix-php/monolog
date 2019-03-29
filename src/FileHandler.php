@@ -52,14 +52,7 @@ class FileHandler extends AbstractObject implements LoggerHandlerInterface
      */
     public function write($level, $message)
     {
-
-
-
         $file = $this->getFile($level);
-
-
-        var_dump($this);die;
-
         if (!$file) {
             return false;
         }
@@ -88,23 +81,23 @@ class FileHandler extends AbstractObject implements LoggerHandlerInterface
         }
         switch ($this->rotate) {
             case self::ROTATE_HOUR:
-                $subDir = date('Ymd');
+                $subDir     = date('Ymd');
                 $timeFormat = date('YmdH');
                 break;
             case self::ROTATE_DAY:
-                $subDir = date('Ym');
+                $subDir     = date('Ym');
                 $timeFormat = date('Ymd');
                 break;
             case self::ROTATE_WEEKLY:
-                $subDir = date('Y');
+                $subDir     = date('Y');
                 $timeFormat = date('YW');
                 break;
             default:
-                $subDir = '';
+                $subDir     = '';
                 $timeFormat = '';
         }
         $filename = $logDir . ($subDir ? DIRECTORY_SEPARATOR . $subDir : '') . DIRECTORY_SEPARATOR . $level . ($timeFormat ? '_' . $timeFormat : '');
-        $file = "{$filename}.log";
+        $file     = "{$filename}.log";
         // 创建目录
         $dir = dirname($file);
         is_dir($dir) or mkdir($dir, 0777, true);
