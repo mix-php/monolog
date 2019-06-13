@@ -18,7 +18,7 @@
   "require": {
     "php": ">=7.0.0",
     "psr/log": "~1.0",
-    "mix/framework": "~2.0.0"
+    "mix/framework": "v2.1.x-dev"
   },
   "autoload": {
     "psr-4": {
