@@ -43,6 +43,9 @@ class StdoutHandler extends AbstractComponent implements LoggerHandlerInterface
             case 'notice':
                 Color::new(Color::FG_GREEN)->print($message);
                 break;
+            case 'info':
+                Color::new(Color::FG_BLUE)->print($message);
+                break;
             default:
                 echo $message;
         }
