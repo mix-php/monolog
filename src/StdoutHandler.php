@@ -3,7 +3,7 @@
 namespace Mix\Log;
 
 use Mix\Console\CommandLine\Color;
-use Mix\Core\Component\AbstractComponent;
+use Mix\Component\AbstractComponent;
 use Mix\Helper\PhpHelper;
 
 /**

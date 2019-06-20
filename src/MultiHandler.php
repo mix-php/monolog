@@ -2,7 +2,7 @@
 
 namespace Mix\Log;
 
-use Mix\Core\Component\AbstractComponent;
+use Mix\Component\AbstractComponent;
 
 /**
  * Class MultiHandler

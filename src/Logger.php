@@ -2,7 +2,7 @@
 
 namespace Mix\Log;
 
-use Mix\Core\Component\AbstractComponent;
+use Mix\Component\AbstractComponent;
 use Mix\Core\Component\ComponentInterface;
 use Mix\Helper\ProcessHelper;
 use Psr\Log\LoggerInterface;
