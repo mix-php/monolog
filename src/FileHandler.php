@@ -2,7 +2,7 @@
 
 namespace Mix\Log;
 
-use Mix\Core\Bean\AbstractObject;
+use Mix\Bean\Object\AbstractObject;
 use Mix\Helper\FileSystemHelper;
 
 /**
