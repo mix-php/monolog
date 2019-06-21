@@ -3,7 +3,7 @@
 namespace Mix\Log;
 
 use Mix\Component\AbstractComponent;
-use Mix\Core\Component\ComponentInterface;
+use Mix\Component\ComponentInterface;
 use Mix\Helper\ProcessHelper;
 use Psr\Log\LoggerInterface;
 
