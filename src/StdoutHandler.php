@@ -13,12 +13,12 @@ class StdoutHandler implements LoggerHandlerInterface
 {
 
     /**
-     * 写入日志
+     * 处理
      * @param $level
      * @param $message
      * @return bool
      */
-    public function write($level, $message)
+    public function handle($level, $message)
     {
         // TODO: Implement write() method.
         // FastCGI 模式下不打印
