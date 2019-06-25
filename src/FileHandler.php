@@ -53,12 +53,12 @@ class FileHandler implements LoggerHandlerInterface
     }
 
     /**
-     * 写入日志
+     * 处理日志
      * @param $level
      * @param $message
      * @return bool
      */
-    public function write($level, $message)
+    public function handle($level, $message)
     {
         $file = $this->getLogFile($level);
         if (!$file) {

@@ -13,7 +13,7 @@ class StdoutHandler implements LoggerHandlerInterface
 {
 
     /**
-     * 处理
+     * 处理日志
      * @param $level
      * @param $message
      * @return bool
