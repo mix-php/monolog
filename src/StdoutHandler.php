@@ -3,7 +3,6 @@
 namespace Mix\Log;
 
 use Mix\Console\CommandLine\Color;
-use Mix\Helper\PhpHelper;
 
 /**
  * Class StdoutHandler
@@ -23,11 +22,11 @@ class StdoutHandler implements LoggerHandlerInterface
     {
         // TODO: Implement write() method.
         // FastCGI 模式下不打印
-        if (!PhpHelper::isCli()) {
+        if (!(PHP_SAPI === 'cli')) {
             return;
         }
         // win 系统普通打印
-        if (PhpHelper::isWin()) {
+        if (stripos(PHP_OS, 'WIN') !== false) {
             echo $message;
             return true;
         }
