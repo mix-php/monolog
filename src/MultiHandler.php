@@ -2,21 +2,30 @@
 
 namespace Mix\Log;
 
-use Mix\Component\AbstractComponent;
+use Mix\Bean\BeanInjector;
 
 /**
  * Class MultiHandler
  * @package Mix\Log
  * @author liu,jian <coder.keda@gmail.com>
  */
-class MultiHandler extends AbstractComponent implements LoggerHandlerInterface
+class MultiHandler implements LoggerHandlerInterface
 {
 
     /**
      * 日志处理器集合
-     * @var \Mix\Log\LoggerHandlerInterface[]
+     * @var LoggerHandlerInterface[]
      */
     public $handlers = [];
+
+    /**
+     * Authorization constructor.
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        BeanInjector::inject($this, $config);
+    }
 
     /**
      * 写入日志

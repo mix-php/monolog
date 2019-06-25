@@ -3,7 +3,6 @@
 namespace Mix\Log;
 
 use Mix\Console\CommandLine\Color;
-use Mix\Component\AbstractComponent;
 use Mix\Helper\PhpHelper;
 
 /**
@@ -11,7 +10,7 @@ use Mix\Helper\PhpHelper;
  * @package Mix\Log
  * @author liu,jian <coder.keda@gmail.com>
  */
-class StdoutHandler extends AbstractComponent implements LoggerHandlerInterface
+class StdoutHandler implements LoggerHandlerInterface
 {
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Mix\Log;
 
-use Mix\Bean\Object\AbstractObject;
+use Mix\Bean\BeanInjector;
 use Mix\Helper\FileSystemHelper;
 
 /**
@@ -10,7 +10,7 @@ use Mix\Helper\FileSystemHelper;
  * @package Mix\Log
  * @author liu,jian <coder.keda@gmail.com>
  */
-class FileHandler extends AbstractObject implements LoggerHandlerInterface
+class FileHandler implements LoggerHandlerInterface
 {
 
     /**
@@ -45,6 +45,15 @@ class FileHandler extends AbstractObject implements LoggerHandlerInterface
     public $maxFileSize = 0;
 
     /**
+     * Authorization constructor.
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        BeanInjector::inject($this, $config);
+    }
+
+    /**
      * 写入日志
      * @param $level
      * @param $message
@@ -52,7 +61,7 @@ class FileHandler extends AbstractObject implements LoggerHandlerInterface
      */
     public function write($level, $message)
     {
-        $file = $this->getFile($level);
+        $file = $this->getLogFile($level);
         if (!$file) {
             return false;
         }
@@ -60,11 +69,11 @@ class FileHandler extends AbstractObject implements LoggerHandlerInterface
     }
 
     /**
-     * 获取文件
+     * 获取日志文件
      * @param $level
      * @return bool|string
      */
-    protected function getFile($level)
+    protected function getLogFile($level)
     {
         // 没有文件信息
         if (!$this->single && !$this->dir) {
@@ -75,10 +84,7 @@ class FileHandler extends AbstractObject implements LoggerHandlerInterface
             return $this->single;
         }
         // 生成文件名
-        $logDir = $this->dir;
-        if (!FileSystemHelper::isAbsolute($logDir)) {
-            $logDir = \Mix::$app->getRuntimePath() . DIRECTORY_SEPARATOR . $this->dir;
-        }
+        $logDir = $this->getLogDir();
         switch ($this->rotate) {
             case self::ROTATE_HOUR:
                 $subDir     = date('Ymd');
@@ -108,6 +114,39 @@ class FileHandler extends AbstractObject implements LoggerHandlerInterface
         }
         // 返回
         return $file;
+    }
+
+    /**
+     * 获取日志目录
+     * @return string
+     */
+    protected function getLogDir()
+    {
+        $cacheDir = $this->dir;
+        $isMix    = class_exists(\Mix::class);
+        if ($isMix && !static::isAbsolute($cacheDir)) {
+            $cacheDir = \Mix::$app->getRuntimePath() . DIRECTORY_SEPARATOR . $this->dir;
+        }
+        return $cacheDir;
+    }
+
+    /**
+     * 判断是否为绝对路径
+     * @param $path
+     * @return bool
+     */
+    protected static function isAbsolute($path)
+    {
+        if (($position = strpos($path, './')) !== false && $position <= 2) {
+            return false;
+        }
+        if (strpos($path, ':') !== false) {
+            return true;
+        }
+        if (substr($path, 0, 1) === '/') {
+            return true;
+        }
+        return false;
     }
 
 }

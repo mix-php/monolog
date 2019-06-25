@@ -2,9 +2,7 @@
 
 namespace Mix\Log;
 
-use Mix\Component\AbstractComponent;
-use Mix\Component\ComponentInterface;
-use Mix\Helper\ProcessHelper;
+use Mix\Bean\BeanInjector;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -14,12 +12,6 @@ use Psr\Log\LoggerInterface;
  */
 class Logger extends AbstractComponent implements LoggerInterface
 {
-
-    /**
-     * 协程模式
-     * @var int
-     */
-    const COROUTINE_MODE = ComponentInterface::COROUTINE_MODE_REFERENCE;
 
     /**
      * 日志记录级别
@@ -32,6 +24,15 @@ class Logger extends AbstractComponent implements LoggerInterface
      * @var \Mix\Log\LoggerHandlerInterface
      */
     public $handler;
+
+    /**
+     * Authorization constructor.
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        BeanInjector::inject($this, $config);
+    }
 
     /**
      * emergency日志
@@ -134,7 +135,7 @@ class Logger extends AbstractComponent implements LoggerInterface
         if (!in_array($level, $levels) || in_array($level, $this->levels)) {
             $message = static::interpolate($message, $context);
             $time    = date('Y-m-d H:i:s');
-            $pid     = ProcessHelper::getPid();
+            $pid     = getmypid();
             $message = "[{$level}] {$time} <{$pid}> [message] {$message}" . PHP_EOL;
             return $this->handler->write($level, $message);
         }
