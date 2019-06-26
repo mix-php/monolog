@@ -10,7 +10,7 @@ use Psr\Log\LoggerInterface;
  * @package Mix\Log
  * @author liu,jian <coder.keda@gmail.com>
  */
-class Logger extends AbstractComponent implements LoggerInterface
+class Logger implements LoggerInterface
 {
 
     /**
@@ -137,7 +137,7 @@ class Logger extends AbstractComponent implements LoggerInterface
             $time    = date('Y-m-d H:i:s');
             $pid     = getmypid();
             $message = "[{$level}] {$time} <{$pid}> [message] {$message}" . PHP_EOL;
-            return $this->handler->write($level, $message);
+            return $this->handler->handle($level, $message);
         }
         return false;
     }
