@@ -2,8 +2,6 @@
 
 namespace Mix\Log;
 
-use Mix\Bean\BeanInjector;
-
 /**
  * Class MultiHandler
  * @package Mix\Log
@@ -20,13 +18,11 @@ class MultiHandler implements LoggerHandlerInterface
 
     /**
      * MultiHandler constructor.
-     * @param array $config
-     * @throws \PhpDocReader\AnnotationException
-     * @throws \ReflectionException
+     * @param LoggerHandlerInterface ...$handlers
      */
-    public function __construct(array $config = [])
+    public function __construct(LoggerHandlerInterface ...$handlers)
     {
-        BeanInjector::inject($this, $config);
+        $this->handlers = $handlers;
     }
 
     /**
