@@ -26,10 +26,12 @@ class Logger implements LoggerInterface
     public $handler;
 
     /**
-     * Authorization constructor.
+     * Logger constructor.
      * @param array $config
+     * @throws \PhpDocReader\AnnotationException
+     * @throws \ReflectionException
      */
-    public function __construct(array $config)
+    public function __construct(array $config = [])
     {
         BeanInjector::inject($this, $config);
     }
