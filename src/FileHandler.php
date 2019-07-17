@@ -123,12 +123,12 @@ class FileHandler implements LoggerHandlerInterface
      */
     protected function getLogDir()
     {
-        $cacheDir = $this->dir;
-        $isMix    = class_exists(\Mix::class);
-        if ($isMix && !static::isAbsolute($cacheDir)) {
-            $cacheDir = \Mix::$app->getRuntimePath() . DIRECTORY_SEPARATOR . $this->dir;
+        $dir   = $this->dir;
+        $isMix = class_exists(\Mix::class);
+        if ($isMix && !static::isAbsolute($dir)) {
+            $dir = \Mix::$app->getRuntimePath() . DIRECTORY_SEPARATOR . $dir;
         }
-        return $cacheDir;
+        return $dir;
     }
 
     /**
