@@ -85,7 +85,7 @@ class FileHandler implements LoggerHandlerInterface
             return $this->single;
         }
         // 生成文件名
-        $logDir = $this->getLogDir();
+        $logDir = $this->dir;
         switch ($this->rotate) {
             case self::ROTATE_HOUR:
                 $subDir     = date('Ymd');
@@ -115,39 +115,6 @@ class FileHandler implements LoggerHandlerInterface
         }
         // 返回
         return $file;
-    }
-
-    /**
-     * 获取日志目录
-     * @return string
-     */
-    protected function getLogDir()
-    {
-        $dir   = $this->dir;
-        $isMix = class_exists(\Mix::class);
-        if ($isMix && !static::isAbsolute($dir)) {
-            $dir = \Mix::$app->getRuntimePath() . DIRECTORY_SEPARATOR . $dir;
-        }
-        return $dir;
-    }
-
-    /**
-     * 判断是否为绝对路径
-     * @param $path
-     * @return bool
-     */
-    protected static function isAbsolute($path)
-    {
-        if (($position = strpos($path, './')) !== false && $position <= 2) {
-            return false;
-        }
-        if (strpos($path, ':') !== false) {
-            return true;
-        }
-        if (substr($path, 0, 1) === '/') {
-            return true;
-        }
-        return false;
     }
 
 }
