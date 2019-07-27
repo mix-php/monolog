@@ -136,7 +136,8 @@ class Logger implements LoggerInterface
         $levels = ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'];
         if (!in_array($level, $levels) || in_array($level, $this->levels)) {
             $message = static::interpolate($message, $context);
-            $time    = date('Y-m-d H:i:s');
+            list($msec, $sec) = explode(' ', microtime());
+            $time    = date('Y-m-d H:i:s', $sec) . '.' . intval($msec * 1000);
             $pid     = getmypid();
             $message = "[{$level}] {$time} <{$pid}> [message] {$message}" . PHP_EOL;
             return $this->handler->handle($level, $message);
