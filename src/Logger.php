@@ -139,7 +139,7 @@ class Logger implements LoggerInterface
             list($msec, $sec) = explode(' ', microtime());
             $time    = date('Y-m-d H:i:s', $sec) . '.' . intval($msec * 1000);
             $pid     = getmypid();
-            $message = "[{$level}] {$time} <{$pid}> [message] {$message}" . PHP_EOL;
+            $message = "[{$level}] {$time} <{$pid}> {$message}" . PHP_EOL;
             return $this->handler->handle($level, $message);
         }
         return false;
