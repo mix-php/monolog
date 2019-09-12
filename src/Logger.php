@@ -3,6 +3,7 @@
 namespace Mix\Log;
 
 use Mix\Bean\BeanInjector;
+use Mix\Console\CommandLine\Color;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -137,9 +138,27 @@ class Logger implements LoggerInterface
         if (!in_array($level, $levels) || in_array($level, $this->levels)) {
             $message = static::interpolate($message, $context);
             list($msec, $sec) = explode(' ', microtime());
-            $time    = date('Y-m-d H:i:s', $sec) . '.' . intval($msec * 1000);
-            $pid     = getmypid();
-            $message = "[{$level}] {$time} <{$pid}> {$message}" . PHP_EOL;
+            $time   = date('Y-m-d H:i:s', $sec) . '.' . intval($msec * 1000);
+            $pid    = getmypid();
+            $header = "[{$level}] {$time} <{$pid}>";
+            switch ($level) { // 渲染颜色
+                case 'error':
+                    $header = Color::new(Color::FG_RED)->sprint($header);
+                    break;
+                case 'warning':
+                    $header = Color::new(Color::FG_YELLOW)->sprint($header);
+                    break;
+                case 'notice':
+                    $header = Color::new(Color::FG_GREEN)->sprint($header);
+                    break;
+                case 'debug':
+                    $header = Color::new(Color::FG_CYAN)->sprint($header);
+                    break;
+                case 'info':
+                    $header = Color::new(Color::FG_BLUE)->sprint($header);
+                    break;
+            }
+            $message = "{$header} {$message}" . PHP_EOL;
             return $this->handler->handle($level, $message);
         }
         return false;

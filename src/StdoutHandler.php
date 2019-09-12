@@ -21,32 +21,14 @@ class StdoutHandler implements LoggerHandlerInterface
     public function handle($level, $message)
     {
         // TODO: Implement write() method.
-        // FastCGI 模式下不打印
-        if (!(PHP_SAPI === 'cli')) {
-            return;
-        }
-        // win 系统普通打印
+        // win系统普通打印
         if (stripos(PHP_OS, 'WIN') !== false) {
+            $message = preg_replace("/\\e\[[0-9]+m/", '', $message); // 过滤颜色
             echo $message;
             return true;
         }
         // 带颜色打印
-        switch ($level) {
-            case 'error':
-                Color::new(Color::FG_RED)->print($message);
-                break;
-            case 'warning':
-                Color::new(Color::FG_YELLOW)->print($message);
-                break;
-            case 'notice':
-                Color::new(Color::FG_GREEN)->print($message);
-                break;
-            case 'info':
-                Color::new(Color::FG_BLUE)->print($message);
-                break;
-            default:
-                echo $message;
-        }
+        echo $message;
         return true;
     }
 

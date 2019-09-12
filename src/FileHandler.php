@@ -62,7 +62,8 @@ class FileHandler implements LoggerHandlerInterface
      */
     public function handle($level, $message)
     {
-        $file = $this->getLogFile($level);
+        $file    = $this->getLogFile($level);
+        $message = preg_replace("/\\e\[[0-9]+m/", '', $message); // 过滤颜色
         if (!$file) {
             return false;
         }
