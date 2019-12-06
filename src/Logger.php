@@ -41,88 +41,80 @@ class Logger implements LoggerInterface
      * emergency日志
      * @param string $message
      * @param array $context
-     * @return bool
      */
     public function emergency($message, array $context = [])
     {
-        return $this->log(__FUNCTION__, $message, $context);
+        $this->log(__FUNCTION__, $message, $context);
     }
 
     /**
      * alert日志
      * @param string $message
      * @param array $context
-     * @return bool
      */
     public function alert($message, array $context = [])
     {
-        return $this->log(__FUNCTION__, $message, $context);
+        $this->log(__FUNCTION__, $message, $context);
     }
 
     /**
      * critical日志
      * @param string $message
      * @param array $context
-     * @return bool
      */
     public function critical($message, array $context = [])
     {
-        return $this->log(__FUNCTION__, $message, $context);
+        $this->log(__FUNCTION__, $message, $context);
     }
 
     /**
      * error日志
      * @param string $message
      * @param array $context
-     * @return bool
      */
     public function error($message, array $context = [])
     {
-        return $this->log(__FUNCTION__, $message, $context);
+        $this->log(__FUNCTION__, $message, $context);
     }
 
     /**
      * warning日志
      * @param string $message
      * @param array $context
-     * @return bool
      */
     public function warning($message, array $context = [])
     {
-        return $this->log(__FUNCTION__, $message, $context);
+        $this->log(__FUNCTION__, $message, $context);
     }
 
     /**
      * notice日志
      * @param string $message
      * @param array $context
-     * @return bool
      */
     public function notice($message, array $context = [])
     {
-        return $this->log(__FUNCTION__, $message, $context);
+        $this->log(__FUNCTION__, $message, $context);
     }
 
     /**
      * info日志
      * @param string $message
      * @param array $context
-     * @return bool
      */
     public function info($message, array $context = [])
     {
-        return $this->log(__FUNCTION__, $message, $context);
+        $this->log(__FUNCTION__, $message, $context);
     }
 
     /**
      * debug日志
      * @param string $message
      * @param array $context
-     * @return bool
      */
     public function debug($message, array $context = [])
     {
-        return $this->log(__FUNCTION__, $message, $context);
+        $this->log(__FUNCTION__, $message, $context);
     }
 
     /**
@@ -130,38 +122,36 @@ class Logger implements LoggerInterface
      * @param mixed $level
      * @param string $message
      * @param array $context
-     * @return bool
      */
     public function log($level, $message, array $context = [])
     {
-        $levels = ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug'];
-        if (!in_array($level, $levels) || in_array($level, $this->levels)) {
-            $message = static::interpolate($message, $context);
-            list($msec, $sec) = explode(' ', microtime());
-            $time   = date('Y-m-d H:i:s', $sec) . '.' . intval($msec * 1000);
-            $pid    = getmypid();
-            $header = "[{$level}] {$time} <{$pid}>";
-            switch ($level) { // 渲染颜色
-                case 'error':
-                    $header = Color::new(Color::FG_RED)->sprint($header);
-                    break;
-                case 'warning':
-                    $header = Color::new(Color::FG_YELLOW)->sprint($header);
-                    break;
-                case 'notice':
-                    $header = Color::new(Color::FG_GREEN)->sprint($header);
-                    break;
-                case 'debug':
-                    $header = Color::new(Color::FG_CYAN)->sprint($header);
-                    break;
-                case 'info':
-                    $header = Color::new(Color::FG_BLUE)->sprint($header);
-                    break;
-            }
-            $message = "{$header} {$message}" . PHP_EOL;
-            return $this->handler->handle($level, $message);
+        if (in_array($level, ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug']) && !in_array($level, $this->levels)) {
+            return;
         }
-        return false;
+        $message = static::interpolate($message, $context);
+        list($msec, $sec) = explode(' ', microtime());
+        $time   = date('Y-m-d H:i:s', $sec) . '.' . intval($msec * 1000);
+        $pid    = getmypid();
+        $header = "[{$level}] {$time} <{$pid}>";
+        switch ($level) { // 渲染颜色
+            case 'error':
+                $header = Color::new(Color::FG_RED)->sprint($header);
+                break;
+            case 'warning':
+                $header = Color::new(Color::FG_YELLOW)->sprint($header);
+                break;
+            case 'notice':
+                $header = Color::new(Color::FG_GREEN)->sprint($header);
+                break;
+            case 'debug':
+                $header = Color::new(Color::FG_CYAN)->sprint($header);
+                break;
+            case 'info':
+                $header = Color::new(Color::FG_BLUE)->sprint($header);
+                break;
+        }
+        $message = "{$header} {$message}" . PHP_EOL;
+        $this->handler->handle($level, $message);
     }
 
     /**

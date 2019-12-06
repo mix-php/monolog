@@ -14,7 +14,7 @@ interface LoggerHandlerInterface
      * 处理日志
      * @param $level
      * @param $message
-     * @return bool
+     * @return void
      */
     public function handle($level, $message);
 

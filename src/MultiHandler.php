@@ -29,16 +29,13 @@ class MultiHandler implements LoggerHandlerInterface
      * 处理日志
      * @param $level
      * @param $message
-     * @return bool
      */
     public function handle($level, $message)
     {
-        // TODO: Implement write() method.
         foreach ($this->handlers as $handler) {
             /** @var LoggerHandlerInterface $handler */
             $handler->handle($level, $message);
         }
-        return true;
     }
 
 }

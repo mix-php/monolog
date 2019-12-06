@@ -58,16 +58,15 @@ class FileHandler implements LoggerHandlerInterface
      * 处理日志
      * @param $level
      * @param $message
-     * @return bool
      */
     public function handle($level, $message)
     {
         $file    = $this->getLogFile($level);
         $message = preg_replace("/\\e\[[0-9]+m/", '', $message); // 过滤颜色
         if (!$file) {
-            return false;
+            return;
         }
-        return error_log($message, 3, $file);
+        error_log($message, 3, $file);
     }
 
     /**
