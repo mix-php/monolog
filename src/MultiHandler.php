@@ -26,6 +26,15 @@ class MultiHandler implements LoggerHandlerInterface
     }
 
     /**
+     * 新增
+     * @param LoggerHandlerInterface $handler
+     */
+    public function add(LoggerHandlerInterface $handler)
+    {
+        $this->handlers[] = $handler;
+    }
+
+    /**
      * 处理日志
      * @param $level
      * @param $message
