@@ -103,7 +103,12 @@ class FileHandler implements LoggerHandlerInterface
                 $subDir     = '';
                 $timeFormat = '';
         }
-        $filename = $logDir . ($subDir ? DIRECTORY_SEPARATOR . $subDir : '') . DIRECTORY_SEPARATOR . $level . ($timeFormat ? '_' . $timeFormat : '');
+        if (in_array($level, Constants::LEVELS)) {
+            $prefix = '';
+        } else {
+            $prefix = "{$level}_";
+        }
+        $filename = $logDir . ($subDir ? DIRECTORY_SEPARATOR . $subDir : '') . DIRECTORY_SEPARATOR . $prefix . ($timeFormat ?: '');
         $file     = "{$filename}.log";
         // 创建目录
         $dir = dirname($file);

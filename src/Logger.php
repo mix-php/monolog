@@ -125,7 +125,7 @@ class Logger implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        if (in_array($level, ['emergency', 'alert', 'critical', 'error', 'warning', 'notice', 'info', 'debug']) && !in_array($level, $this->levels)) {
+        if (in_array($level, Constants::LEVELS) && !in_array($level, $this->levels)) {
             return;
         }
         $message = static::interpolate($message, $context);
